@@ -63,3 +63,22 @@ def client(app: Flask):
 @pytest.fixture()
 def client_runner(app: Flask):
     return app.test_cli_runner()
+
+
+def known_emails():
+    return [x["email"] for x in server.clubs]
+
+
+@pytest.fixture(params=known_emails())
+def known_email(request: pytest.FixtureRequest) -> str:
+    return request.param
+
+
+@pytest.fixture(params=known_emails())
+def unknown_email(request: pytest.FixtureRequest) -> str:
+    return request.param + ".com"
+
+
+@pytest.fixture(params=["", "alice"])
+def invalid_email(request: pytest.FixtureRequest) -> str:
+    return request.param
