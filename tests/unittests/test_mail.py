@@ -18,7 +18,7 @@ def test_unknown_login(client: FlaskClient, unknown_email: str):
             "email": unknown_email,
         },
     )
-    assert response.status_code == 403
+    assert response.status_code == 302
 
 
 def test_invalid_login(client: FlaskClient, invalid_email: str):
@@ -28,4 +28,4 @@ def test_invalid_login(client: FlaskClient, invalid_email: str):
             "email": invalid_email,
         },
     )
-    assert response.status_code == 403
+    assert response.status_code == 302
