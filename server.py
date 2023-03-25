@@ -2,14 +2,21 @@ import json
 from flask import Flask,render_template,request,redirect,flash,url_for
 
 
+CLUBS_DATA_FILE = 'clubs.json'
+COMPETITIONS_DATA_FILE = 'competitions.json'
+DATE_FORMAT = "%Y-%m-%d"
+TIME_FORMAT = "%H:%M:%S"
+DATETIME_FORMAT = f"{DATE_FORMAT} {TIME_FORMAT}"
+
+
 def loadClubs():
-    with open('clubs.json') as c:
+    with open(CLUBS_DATA_FILE) as c:
          listOfClubs = json.load(c)['clubs']
          return listOfClubs
 
 
 def loadCompetitions():
-    with open('competitions.json') as comps:
+    with open(COMPETITIONS_DATA_FILE) as comps:
          listOfCompetitions = json.load(comps)['competitions']
          return listOfCompetitions
 
