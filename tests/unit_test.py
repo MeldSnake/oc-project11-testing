@@ -271,6 +271,7 @@ class TestPurchasePlacesRoute:
     ):
         """Test if a user can use more than twelve points"""
         club_points = int(first_club["points"])
+        competition_places = int(first_future_competition["numberOfPlaces"])
         quantity = 13
         _ = client.post(
             url_for("purchasePlaces"),
