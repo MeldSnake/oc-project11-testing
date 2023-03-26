@@ -7,6 +7,7 @@
 <body>
     <h2>{{competition['name']}}</h2>
     Places available: {{competition['numberOfPlaces']}}
+    {% if competition['date']|is_future %}
     <form action="/purchasePlaces" method="post">
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
@@ -14,5 +15,12 @@
         <label for="places">How many places?</label>
         <button type="submit">Book</button>
     </form>
+        {% else %}
+    <form action="{{url_for('showSummary')}}" method="post">
+        <p>You cannot purchase place for this competition</p>
+        <input type="hidden" name="email" value="{{club['email']}}">
+        <button type="submit">Return</button>
+    </form>
+        {% endif %}
 </body>
 </html>

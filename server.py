@@ -1,4 +1,5 @@
 import json
+import datetime
 from flask import Flask,render_template,request,redirect,flash,url_for,abort
 
 
@@ -26,6 +27,12 @@ app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
+
+
+@app.template_filter()
+def is_future(data: str):
+    data_dt = datetime.datetime.strptime(data, DATETIME_FORMAT)
+    return data_dt > datetime.datetime.now()
 
 
 @app.route('/')
