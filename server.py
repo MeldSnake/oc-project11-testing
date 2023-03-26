@@ -47,6 +47,7 @@ def book(competition,club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     max_places = min(
+        12,
         int(foundClub["points"]),
         int(foundCompetition["numberOfPlaces"]),
     )
@@ -62,7 +63,7 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    if placesRequired > min(int(club["points"]), int(competition["numberOfPlaces"])):
+    if placesRequired > min(12, int(club["points"]), int(competition["numberOfPlaces"])):
         abort(400)
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     club['points'] = int(club['points'])-placesRequired
