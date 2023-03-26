@@ -46,10 +46,13 @@ def showSummary():
 def book(competition,club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
-    max_places = min(
-        12,
-        int(foundClub["points"]),
-        int(foundCompetition["numberOfPlaces"]),
+    max_places = max(
+        0,
+        min(
+            12,
+            int(foundClub["points"]),
+            int(foundCompetition["numberOfPlaces"]),
+        ),
     )
     if foundClub and foundCompetition:
         return render_template('booking.html',club=foundClub,competition=foundCompetition,max_places=max_places)
@@ -63,7 +66,7 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    if placesRequired > min(12, int(club["points"]), int(competition["numberOfPlaces"])):
+    if placesRequired < 0 or placesRequired > min(12, int(club["points"]), int(competition["numberOfPlaces"])):
         abort(400)
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     club['points'] = int(club['points'])-placesRequired
