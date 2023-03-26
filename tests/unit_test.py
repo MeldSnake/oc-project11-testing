@@ -369,7 +369,7 @@ class TestPurchasePlacesRoute:
         )
         server_club = [x for x in server.clubs if x["name"] == first_club["name"]][0]
 
-        assert server_club["points"] == club_points, "Invalid, points have been changed"
+        assert int(server_club["points"]) == club_points, "Invalid, points have been changed"
 
 
 class TestLogout:
