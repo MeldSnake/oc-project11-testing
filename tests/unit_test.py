@@ -220,9 +220,8 @@ class TestPurchasePlacesRoute:
         """Test if a club can purchase places using it's point,
         if the purchase is validated and the value deducted from it's points"""
         quantity = 1
-        club_points = int(first_club["points"])
-        competition_places = int(first_future_competition["numberOfPlaces"])
-        new_points = club_points - quantity
+        club_points = int(first_club["points"]) - quantity
+        competition_places = int(first_future_competition["numberOfPlaces"]) - quantity
         response = client.post(
             url_for("purchasePlaces"),
             data={
@@ -237,7 +236,7 @@ class TestPurchasePlacesRoute:
 
         assert response.status_code == 200, "Invalid code response"
         assert "Great-booking complete!" in html, "Booking not validated"
-        assert int(server_club["points"]) == new_points, "Invalid, points not deducted on club"
+        assert int(server_club["points"]) == club_points, "Invalid, points not deducted on club"
         assert int(server_competition["numberOfPlaces"]) == competition_places, "Invalid, points not deducted on competition"
 
     def test_purchase_negative(
