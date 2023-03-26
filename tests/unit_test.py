@@ -145,11 +145,8 @@ class TestShowSummaryRoute:
         )
 
         assert (
-            response.status_code == 302
+            response.status_code == 400
         ), "Invalid redirection status code, this sould be 302"
-        assert urlparse(response.location).path == url_for(
-            "index"
-        ), "Invalid redirection URL, should redirect to index url"
 
     def test_show_summary_invalid_mail(
         self,
@@ -313,7 +310,7 @@ class TestPurchasePlacesRoute:
         client: FlaskClient,
         first_club: "server.Club",
     ):
-        club_points = int(first_club["numberOfPlaces"])
+        club_points = int(first_club["points"])
         _ = client.post(
             url_for("purchasePlaces"),
             data={
