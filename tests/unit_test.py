@@ -286,6 +286,54 @@ class TestPurchasePlacesRoute:
         assert int(server_club["points"]) == club_points, "Invalid, points have been changed on club"
         assert int(server_competition["numberOfPlaces"]) == competition_places, "Invalid, points have been changed on competition"
 
+    def test_purchase_more_than_club_points(
+        self,
+        client: FlaskClient,
+        first_club: "server.Club",
+        first_future_competition: "server.Competition",
+    ):
+        server_club = [x for x in server.clubs if x["name"] == first_club["name"]][0]
+        server_club["points"] = 1
+        club_points = int(first_club["points"])
+        comp_places = int(first_future_competition["numberOfPlaces"])
+        _ = client.post(
+            url_for("purchasePlaces"),
+            data={
+                "competition": first_future_competition["name"],
+                "club": first_club["name"],
+                "places": 2,
+            },
+        )
+        server_competition = [x for x in server.competitions if x["name"] == first_future_competition["name"]][0]
+
+        assert int(server_club["points"]) == club_points, "Invalid, points have been changed on club"
+        assert int(server_competition["numberOfPlaces"]) == comp_places, "Invalid, points have been changed on competition"
+
+    def test_purchase_more_than_competition_places(
+        self,
+        client: FlaskClient,
+        first_club: "server.Club",
+        first_future_competition: "server.Competition",
+    ):
+        server_competition = [x for x in server.competitions if x["name"] == first_future_competition["name"]][0]
+        server_competition["numberOfPlaces"] = 1
+        first_future_competition
+        club_points = int(first_club["points"])
+        comp_places = int(first_future_competition["numberOfPlaces"])
+        _ = client.post(
+            url_for("purchasePlaces"),
+            data={
+                "competition": first_future_competition["name"],
+                "club": first_club["name"],
+                "places": 2,
+            },
+        )
+        server_club = [x for x in server.clubs if x["name"] == first_club["name"]][0]
+        server_competition = [x for x in server.competitions if x["name"] == first_future_competition["name"]][0]
+
+        assert int(server_club["points"]) == club_points, "Invalid, points have been changed on club"
+        assert int(server_competition["numberOfPlaces"]) == comp_places, "Invalid, points have been changed on competition"
+
     def test_purchase_invalid_club(
         self,
         client: FlaskClient,
