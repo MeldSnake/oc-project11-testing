@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs list | GUDLFT</title>
+</head>
+<body>
+    <h2>Clubs points list</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Club name</th>
+                <th>Points available</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for club in clubs %}
+            <tr>
+                <th>{{club["name"]}}</th>
+                <th>{{club["points"]}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
