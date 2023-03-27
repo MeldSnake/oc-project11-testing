@@ -49,3 +49,13 @@
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
 
+    To run the different tests use the following command at the root of the project using the created environment:
+    <br/>
+    ```shell
+    > python -m pytest tests
+    ```
+    Or, *to add the coverage generation in html format*:
+    ```shell
+    > python -m pytest tests --cov=. --cov-report=html
+    ```
+    this will generate an html file in `htmlcov/index.html`
