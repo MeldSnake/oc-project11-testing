@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 import pytest
 from flask import url_for
 from selenium import webdriver
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 LOCALHOST_ROOT_URL = "http://localhost:4000"
 DEFAULT_CLUB = {
@@ -15,7 +16,8 @@ DEFAULT_CLUB = {
 
 @pytest.fixture(scope="class")
 def browser():
-    with webdriver.ChromiumEdge("tests/msedgedriver.exe") as browser:
+    driver = EdgeChromiumDriverManager().install()
+    with webdriver.ChromiumEdge(driver) as browser:
         yield browser
 
 
