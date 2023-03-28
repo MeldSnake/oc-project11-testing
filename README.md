@@ -50,12 +50,29 @@
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
 
     To run the different tests use the following command at the root of the project using the created environment:
-    <br/>
-    ```shell
-    > python -m pytest tests
-    ```
-    Or, *to add the coverage generation in html format*:
-    ```shell
-    > python -m pytest tests --cov=. --cov-report=html
-    ```
-    this will generate an html file in `htmlcov/index.html`
+    
+    - Pytests and Coverage
+        ```shell
+        > python -m pytest tests
+        ```
+        Or, *to add the coverage generation in html format*:
+        ```shell
+        > python -m pytest tests --cov=. --cov-report=html
+        ```
+        this will generate an html file in `htmlcov/index.html`
+    - Locust
+        1. First start the server in the root directory
+            ```shell
+            > python -m flask -A server run
+            ```
+        2. Copy the url given on the console (by default: http://127.0.0.1:5000)
+        2. Start locust
+            ```shell
+            > python -m locust -f tests/performance_test.py --web-host "127.0.0.1"
+            ```
+        3. Go to the url address of locust (default: http://127.0.0.1:8089)
+        4. Enter the values for the load test
+            1. Number of users (eg: 100)
+            2. Spawn rate (eg: 10)
+            3. Host: the previously copied value (default: http://127.0.0.1:5000)
+        5. Start the swarming
